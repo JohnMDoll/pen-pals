@@ -7,6 +7,7 @@ export const WrittenLetters = () =>{
     let letters = db.getLetters()
     let pals = db.getPals()
     let topics = db.getTopics()
+    let lettertopics = db.getLetterTopics()
 /*display each written letter including: 
 pal.name & pal.email for authors and recipients (4 things)
 letter.timestamp, and chosen letter topic(s)
@@ -18,11 +19,16 @@ letter.timestamp, and chosen letter topic(s)
     const findRecipient = (letter) =>{
         return pals.find(pal =>pal.id === parseInt(letter.recipientId))
     }
-    const findTopic = (letter) =>{
-        return topics.find(topic =>topic.id === parseInt(letter.topicId))
+    const findTopic = (topicId) =>{
+        return topics.find(topic =>topic.id === topicId)
     }
-
-
+    const findTopicIDs = (letter) =>{
+            for (const timestamp of lettertopics){
+                if (timestamp.timestamp === letter.timestamp){
+            return timestamp.topics
+        }
+    }
+}
     return  `<h2 class="letter--header">Sent Letters:</h2>
     ${letters.map(letter=>{
         return `
@@ -31,10 +37,12 @@ letter.timestamp, and chosen letter topic(s)
             <div class="letter--body">${letter.letterText}</div>
             <div class="letter--closing">Laterz, ${findAuthor(letter).name} (${findAuthor(letter).email})</div>
             <div class="letter--timestamp">Dispatched ${letter.timestamp}</div>
-            <div class="letter--topic">${findTopic(letter).topic}</div>
+            <ul>${findTopicIDs(letter).map(lettertopic=>{
+                return `<div class="letter--topic" id="${lettertopic}">${findTopic(lettertopic).topic}</div>`
+        }).join("")}</ul>
+
         </section>`
     }).join("")}`
-    
 
 }
 

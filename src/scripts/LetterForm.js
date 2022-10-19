@@ -7,25 +7,35 @@ const mainContainer = document.querySelector("#container")
 
 mainContainer.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === "send--letter") {
+        let topicId=[]
         // Get what the user filled into form fields
         const authorId = parseInt(document.querySelector("#author").value)
-        console.log(authorId)        
         const recipientId = document.querySelector("#recipient").value
-        console.log(recipientId) 
-        const topicId = document.querySelector("input[name='topic']:checked").value
-        console.log(topicId)
+        //const topicId = document.querySelector("input[name='topic']:checked").value
+        // take out single topic selection to make way for multiples
+        topicId = document.querySelectorAll("input[name='topic']:checked")
         const letterText = document.querySelector("input[name='letter']").value
-
-        // Make an object out of the user input
+        //AHHHHHH DATES ARE UNPLEASANT TO RENDER
+        let date = Date.now()
+        const timestamp = date.toLocaleString('en-GB',{timeZone: 'UTC'})
+        // Make an object out of the user input+a timestamp
         const dataToSendToAPI = {
             authorId: authorId,
             recipientId: parseInt(recipientId),
-            topicId: parseInt(topicId),
+            // topicId: topicId,
             letterText: letterText,
+            timestamp: timestamp
         }
-
+        
+        let checkedTopics = []
+        topicId.forEach(id=>{checkedTopics.push(parseInt(id.value))})
+        let topicDataToSendToAPI = {
+            timestamp: timestamp,
+            topics: checkedTopics
+        }
         // Send the data to the API for permanent storage
         dataAccess.sendLetter(dataToSendToAPI)
+        dataAccess.sendLetterTopics(topicDataToSendToAPI)
     }
 })
 
@@ -51,7 +61,7 @@ export const WriteLetter = () => {
             <div class="field">
                 <label class="label" for="topic--selection">Topic Selection</label>
                 ${topics.map(topic => {
-                    return `<input type="radio" name="topic" value="${topic.id}"/>${topic.topic}</option>`
+                    return `<input type="checkbox" name="topic" value="${topic.id}"/>${topic.topic}</option>`
                 }).join("")}
             </div>
             <div class="field">

@@ -1,5 +1,6 @@
 import * as dataAccess from "./dataAccess.js"
 import {WriteLetter} from "./LetterForm.js"
+import {WrittenLetters} from "./DisplayLetters.js"
 let pals = dataAccess.getPals()
 let letters = dataAccess.getLetters()
 let topics = dataAccess.getTopics()
@@ -11,9 +12,9 @@ export const PenPals= () =>{
         <section class="letter--form">
             ${WriteLetter()}
         </section>
-        <h2 class="written--letters>
-        </h2>`
-    }
+        <h2 class="written--letters">Letters:</h2>
+        ${WrittenLetters()}
+    `}
 
-            //  ${WrittenLetters()}
+            
 

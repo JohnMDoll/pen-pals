@@ -17,3 +17,44 @@ h1,h2,h3,h4,h5,h6 {
   font-family: "Patua One", serif;
   letter-spacing: 2px;
 }
+.field{
+	display: flex;
+	align-items: center;
+}
+input[type="checkbox"]:checked{
+  background-color:green;
+}
+input:checked ~ .checkmark:after {
+	display: block;
+	background-color: green;
+}
+#checkbox--1 {
+	content: url(werk.jpg);
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+}
+#checkbox--2 {
+	content: url(y\ not.jpg);
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+}
+#checkbox--3 {
+	content: url(love.jpg);
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+}
+#checkbox--4 {
+	content: url(Congrats.jpg);
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+}
+#checkbox--5 {
+	content: url(RSVP.jpg);
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+}

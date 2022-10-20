@@ -15,8 +15,7 @@ mainContainer.addEventListener("click", clickEvent => {
         // take out single topic selection to make way for multiples
         topicId = document.querySelectorAll("input[name='topic']:checked")
         const letterText = document.querySelector("input[name='letter']").value
-        //AHHHHHH DATES ARE UNPLEASANT TO RENDER
-        let date = Date.now()
+        let date = new Date().toDateString()
         const timestamp = date.toLocaleString('en-GB',{timeZone: 'UTC'})
         // Make an object out of the user input+a timestamp
         const dataToSendToAPI = {
@@ -61,7 +60,7 @@ export const WriteLetter = () => {
             <div class="field">
                 <label class="label" for="topic--selection">Topic Selection</label>
                 ${topics.map(topic => {
-                    return `<input type="checkbox" name="topic" value="${topic.id}"/>${topic.topic}</option>`
+                    return `<input type="checkbox" name="topic" id="checkbox--${topic.id}" value="${topic.id}"/>${topic.topic}</input>`
                 }).join("")}
             </div>
             <div class="field">
